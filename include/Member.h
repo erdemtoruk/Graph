@@ -31,16 +31,9 @@ Returns:
 EDGE* Create_Edge(VERTEX* dst, int weight);
 
 /* 
-Frees the memory allocated dynamically of an edge.
-Parameters:
-    e: Pointer of an edge.
-*/
-void Free_Edge(EDGE* e);
-
-/* 
 Creates a vertex.
 Parameters:
-    data: The data inside the vertex.
+    data: The integer value inside the vertex.
 Returns:
     Vertex pointer if succesful, NULL if an error occured.
 */
@@ -60,11 +53,23 @@ Returns:
 */
 int Add_Edge(VERTEX* src, VERTEX* dst, int weight, bool is_directed);
 
+/*
+
+*/
+void Print_Adjacentlist(VERTEX* v);
+
 /* 
 Frees the memory allocated dynamically of an vertex.
 Parameters:
     v: Pointer of a vertex.
 */
 void Free_Vertex(VERTEX* v);
+
+/* 
+Frees the memory allocated dynamically of an edge.
+Parameters:
+    e: Pointer of an edge.
+*/
+void Free_Edge(EDGE* e);
 
 #endif

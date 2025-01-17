@@ -2,7 +2,7 @@
 
 GRAPH* Create_Graph(){
     GRAPH* new_graph = (GRAPH*) malloc(sizeof(GRAPH));
-    if(new_graph == NULL){
+    if(!new_graph){
         printf("Can not allocate space!\n");
         return NULL;
     }
@@ -15,7 +15,7 @@ GRAPH* Create_Graph(){
 }
 
 int Add_Vertex_to_Graph(GRAPH* g, int data){
-    if(g == NULL){
+    if(!g){
         printf("Graph not found!\n");
         return -1;
     }
@@ -36,30 +36,17 @@ int Add_Vertex_to_Graph(GRAPH* g, int data){
     return 0;
 }
 
-int Add_Edge_to_Graph(GRAPH* g, int src, int dst, int weight, bool is_directed){
-    if(g == NULL){
+int Add_Edge_to_Graph(GRAPH* g, int src_data, int dst_data, int weight, bool is_directed){
+    if(!g){
         printf("Graph not found!\n");
         return -1;
     }
 
-    int index1, index2;
-    bool flag1 = false;
-    bool flag2 = false;
+    VERTEX* src = Find_Vertex(g, src_data);
+    VERTEX* dst = Find_Vertex(g, dst_data);
 
-    for (int i = 0; i < g->num_vertices; i++){
-        if(src == g->vertices[i]->data){
-            index1 = i;
-            flag1 = true;
-        }
-
-        if(dst == g->vertices[i]->data){
-            index2 = i;
-            flag2 = true;
-        }
-    }
-
-    if(flag1 && flag2){
-        if(Add_Edge(g->vertices[index1], g->vertices[index2], weight, is_directed) == -1){
+    if(src && dst){
+        if(Add_Edge(src, dst, weight, is_directed) == -1){
             printf("An error occured!\n");
             return -1;
         }
@@ -68,7 +55,23 @@ int Add_Edge_to_Graph(GRAPH* g, int src, int dst, int weight, bool is_directed){
         printf("Vertex not found!\n");
         return -1;
     }
+
     return 0;
+}
+
+VERTEX* Find_Vertex(GRAPH* g, int data){
+    if(!g){
+        printf("Graph not found!\n");
+        return NULL;
+    }
+
+    for (int i = 0; i < g->num_vertices; i++){
+        if(g->vertices[i]->data == data)
+            return g->vertices[i];
+    }
+
+    printf("Vertex not found in graph!\n");
+    return NULL;    
 }
 
 void Free_Graph(GRAPH* g){

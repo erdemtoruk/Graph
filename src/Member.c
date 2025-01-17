@@ -2,7 +2,7 @@
 
 VERTEX* Create_Vertex(int data){
     VERTEX* new_vertex = (VERTEX*) malloc(sizeof(VERTEX));
-    if(new_vertex == NULL){
+    if(!new_vertex){
         printf("Can not allocate space!\n");
         return NULL;
     }
@@ -14,7 +14,7 @@ VERTEX* Create_Vertex(int data){
 }
 
 int Add_Edge(VERTEX* src, VERTEX* dst, int weight, bool is_directed){
-    if(src == NULL || dst == NULL){
+    if(!src || !dst){
         printf("Vertex not found!\n");
         return -1;
     }
@@ -33,6 +33,23 @@ int Add_Edge(VERTEX* src, VERTEX* dst, int weight, bool is_directed){
     return 0;
 }
 
+void Print_Adjacentlist(VERTEX* v){
+    if(!v){
+        printf("Vertex not found!\n");
+        return;
+    }
+
+    printf("NODE %d: ", v->data);
+    for (int i = 0; i < v->num_adjacent; i++){
+        if(i == 0){
+            printf("%d", v->adjacents[i]->dst->data);
+            continue;
+        }
+        printf("-%d", v->adjacents[i]->dst->data);
+    }
+    printf("\n");
+}
+
 void Free_Vertex(VERTEX* v){
     for (int i = 0; i < v->num_adjacent; i++){
         Free_Edge(v->adjacents[i]);
@@ -43,7 +60,7 @@ void Free_Vertex(VERTEX* v){
 
 EDGE* Create_Edge(VERTEX* dst, int weight){
     EDGE* new_edge = (EDGE*) malloc(sizeof(EDGE));
-    if(new_edge == NULL){
+    if(!new_edge){
         printf("Can not allocate space!\n");
         return NULL;
     }
